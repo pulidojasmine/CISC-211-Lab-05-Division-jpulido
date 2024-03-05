@@ -344,6 +344,11 @@ int main ( void )
             isRTCExpired = false;
             isUSARTTxComplete = false;
             
+            extern uint32_t quotient;
+            mod = 0xDEADBEEF;
+            we_have_a_problem = 0XD000000D;
+
+            
             // set the dividend in r0
             uint32_t myDividend = tc[testCase][0];
             // set the divisor in r1
@@ -382,7 +387,7 @@ int main ( void )
             isRTCExpired = false;
             isUSARTTxComplete = false;
             
-            uint32_t numPointsMax = 30;
+            uint32_t numPointsMax = 20;
             uint32_t pointsScored = numPointsMax * totalPassCount / totalTests;
             
             snprintf((char*)uartTxBuffer, MAX_PRINT_LEN,
