@@ -66,6 +66,71 @@ asmFunc:
     
     /*** STUDENTS: Place your code BELOW this line!!! **************/
 
+    /** set quotient and mod equal to zero **/
+    LDR R3, =quotient
+    MOV R4, 0
+    STR R4, [R3]
+    
+    LDR R5, =mod
+    MOV R6, 0
+    STR R6, [R5]
+    
+    /** move the inputs into dividend and divisor, check if they = 0 **/
+    
+    LDR R2, =dividend
+    LDR R0, [R2]
+    BNE error
+    
+    LDR R3, =divisor
+    LDR R1, [R3]
+    BNE error
+    
+    B divide_by_subtraction
+    
+    /** if the inputs are not zero, use division by subtraction **/
+
+divide_by_subtraction:
+    CMP R0, R1
+    BLT division_complete
+    
+    SUBS R0, R0, R1
+    ADDS R4, R4, 1
+    
+    B divide_by_subtraction
+    
+  
+division_complete:
+    /** set remainder = dividend and to done  **/
+    
+    /** result is stored into r4, we wanna move that to quotient **/
+    LDR R5, =quotient
+    STR R4, [R5]
+    
+    /** remainder is stored into r0, we wanna move that to mod **/
+    LDR R6, =mod
+    STR R0, [R6]
+    
+    /** set we have a problem to 0  **/
+    LDR R1, =we_have_a_problem
+    MOV R2, 0
+    STR R2, [R1]
+    
+    /** branch to done  **/
+    B done
+    
+error:
+    /** set we have a problem to 1  **/
+    LDR R1, =we_have_a_problem
+    MOV R2, 1
+    STR R2, [R1]
+    
+    /** put the address of quotient into r0  **/
+    LDR R0, =quotient
+    
+    /** branch to done  **/
+    B done
+    
+    
     
     /*** STUDENTS: Place your code ABOVE this line!!! **************/
 
